@@ -36,32 +36,32 @@ vec3 getBlocklightColor(int id) {
 
 	#ifdef EMISSIVE_ORES
 	#ifdef EMISSIVE_EMERALD_ORE
-    //Emerald Ore
-    else if(id == 22) color = normalize(vec3(0.05, 1.00, 0.15)) * 0.25;
+    //Emerald Ore - Pre-normalized: vec3(0.05, 1.00, 0.15) / length ≈ vec3(0.0498, 0.9950, 0.1493)
+    else if(id == 22) color = vec3(0.0498, 0.9950, 0.1493) * 0.25;
 	#endif
 	#ifdef EMISSIVE_DIAMOND_ORE
-    //Diamond Ore
-    else if(id == 23) color = normalize(vec3(0.10, 0.40, 1.00)) * 0.25;
+    //Diamond Ore - Pre-normalized: vec3(0.10, 0.40, 1.00) / length ≈ vec3(0.0928, 0.3714, 0.9285)
+    else if(id == 23) color = vec3(0.0928, 0.3714, 0.9285) * 0.25;
 	#endif
 	#ifdef EMISSIVE_COPPER_ORE
-    //Copper Ore
-    else if(id == 24) color = normalize(vec3(0.60, 0.70, 0.30)) * 0.25;
+    //Copper Ore - Pre-normalized: vec3(0.60, 0.70, 0.30) / length ≈ vec3(0.6247, 0.7288, 0.3123)
+    else if(id == 24) color = vec3(0.6247, 0.7288, 0.3123) * 0.25;
 	#endif
 	#ifdef EMISSIVE_LAPIS_ORE
-    //Lapis Ore
-    else if(id == 25) color = normalize(vec3(0.00, 0.10, 1.20)) * 0.25;
+    //Lapis Ore - Pre-normalized: vec3(0.00, 0.10, 1.20) / length ≈ vec3(0.0000, 0.0830, 0.9966)
+    else if(id == 25) color = vec3(0.0000, 0.0830, 0.9966) * 0.25;
 	#endif
 	#ifdef EMISSIVE_GOLD_ORE
-    //Gold Ore
-    else if(id == 26) color = normalize(vec3(1.00, 0.75, 0.10)) * 0.25;
+    //Gold Ore - Pre-normalized: vec3(1.00, 0.75, 0.10) / length ≈ vec3(0.7969, 0.5977, 0.0797)
+    else if(id == 26) color = vec3(0.7969, 0.5977, 0.0797) * 0.25;
 	#endif
 	#ifdef EMISSIVE_IRON_ORE
-    //Iron Ore
-    else if(id == 27) color = normalize(vec3(0.70, 0.40, 0.30)) * 0.25;
+    //Iron Ore - Pre-normalized: vec3(0.70, 0.40, 0.30) / length ≈ vec3(0.8137, 0.4650, 0.3487)
+    else if(id == 27) color = vec3(0.8137, 0.4650, 0.3487) * 0.25;
 	#endif
 	#ifdef EMISSIVE_REDSTONE_ORE
-    //Redstone Ore
-    else if(id == 28) color = normalize(vec3(1.00, 0.05, 0.00)) * 0.25;
+    //Redstone Ore - Pre-normalized: vec3(1.00, 0.05, 0.00) / length ≈ vec3(0.9988, 0.0499, 0.0000)
+    else if(id == 28) color = vec3(0.9988, 0.0499, 0.0000) * 0.25;
 	#endif
 	#endif
 
@@ -79,58 +79,58 @@ vec3 getBlocklightColor(int id) {
     else if(id == 34) color = vec3(PF_R, PF_G, PF_B) * PF_I;
 
 	#ifdef EMISSIVE_FLOWERS
-    //Red flowers
-    else if(id == 35 || id == 309 || id == 310) color = normalize(vec3(1.00, 0.05, 0.05)) * 0.20;
-    //Pink flowers
-    else if(id == 36 || id == 305 || id == 306 || id == 311 || id == 312) color = normalize(vec3(0.80, 0.20, 0.60)) * 0.40;
-    //Yellow flowers
-    else if(id == 37 || id == 307 || id == 308) color = normalize(vec3(0.80, 0.50, 0.05)) * 0.20;
-    //Blue flowers
-    else if(id == 38) color = normalize(vec3(0.00, 0.15, 1.00)) * 0.20;
-    //White flowers
-    else if(id == 39) color = normalize(vec3(0.80, 0.80, 0.80)) * 0.20;
-    //Orange flowers
-    else if(id == 40) color = normalize(vec3(1.00, 0.70, 0.05)) * 0.20;
+    //Red flowers - Pre-normalized: vec3(1.00, 0.05, 0.05) / length ≈ vec3(0.9975, 0.0499, 0.0499)
+    else if(id == 35 || id == 309 || id == 310) color = vec3(0.9975, 0.0499, 0.0499) * 0.20;
+    //Pink flowers - Pre-normalized: vec3(0.80, 0.20, 0.60) / length ≈ vec3(0.7845, 0.1961, 0.5883)
+    else if(id == 36 || id == 305 || id == 306 || id == 311 || id == 312) color = vec3(0.7845, 0.1961, 0.5883) * 0.40;
+    //Yellow flowers - Pre-normalized: vec3(0.80, 0.50, 0.05) / length ≈ vec3(0.8427, 0.5267, 0.0527)
+    else if(id == 37 || id == 307 || id == 308) color = vec3(0.8427, 0.5267, 0.0527) * 0.20;
+    //Blue flowers - Pre-normalized: vec3(0.00, 0.15, 1.00) / length ≈ vec3(0.0000, 0.1483, 0.9890)
+    else if(id == 38) color = vec3(0.0000, 0.1483, 0.9890) * 0.20;
+    //White flowers - Pre-normalized: vec3(0.80, 0.80, 0.80) / length = vec3(0.5774, 0.5774, 0.5774)
+    else if(id == 39) color = vec3(0.5774, 0.5774, 0.5774) * 0.20;
+    //Orange flowers - Pre-normalized: vec3(1.00, 0.70, 0.05) / length ≈ vec3(0.8165, 0.5715, 0.0408)
+    else if(id == 40) color = vec3(0.8165, 0.5715, 0.0408) * 0.20;
 	#endif
 
 	//Jack-O-Lantern
 	else if(id == 41) color = vec3(JL_R, JL_G, JL_B) * JL_I;
     //Enchanting table
     else if(id == 42) color = vec3(ET_R, ET_G, ET_B) * ET_I;
-	//Red Candle
-	else if(id == 43) color = normalize(vec3(1.0, 0.1, 0.1));
-	//Orange Candle
-	else if(id == 44) color = normalize(vec3(1.0, 0.5, 0.1));
-	//Yellow Candle
-	else if(id == 45) color = normalize(vec3(1.0, 1.0, 0.1));
-	//Brown Candle
-	else if(id == 46) color = normalize(vec3(0.7, 0.7, 0.0));
-	//Green Candle
-	else if(id == 47) color = normalize(vec3(0.1, 1.0, 0.1));
-	//Lime Candle
-	else if(id == 48) color = normalize(vec3(0.0, 1.0, 0.1));
-	//Blue Candle
-	else if(id == 49) color = normalize(vec3(0.1, 0.1, 1.0));
-	//Light blue Candle
-	else if(id == 50) color = normalize(vec3(0.5, 0.5, 1.0));
-	//Cyan Candle
-	else if(id == 51) color = normalize(vec3(0.1, 1.0, 1.0));
-	//Purple Candle
-	else if(id == 52) color = normalize(vec3(0.7, 0.1, 1.0));
-	//Magenta Candle
-	else if(id == 53) color = normalize(vec3(1.0, 0.1, 1.0));
-	//Pink Candle
-	else if(id == 54) color = normalize(vec3(1.0, 0.5, 1.0));
-	//Black Candle
-	else if(id == 55) color = normalize(vec3(0.3, 0.3, 0.3));
-	//White Candle
-	else if(id == 56) color = normalize(vec3(0.9, 0.9, 0.9));
-	//Gray Candle
-	else if(id == 57) color = normalize(vec3(0.5, 0.5, 0.5));
-	//Light gray Candle
-	else if(id == 58) color = normalize(vec3(0.7, 0.7, 0.7));
-    //Candle
-    else if(id == 59) color = normalize(vec3(0.6, 0.5, 0.4));
+	//Red Candle - Pre-normalized: vec3(1.0, 0.1, 0.1) / length ≈ vec3(0.9901, 0.0990, 0.0990)
+	else if(id == 43) color = vec3(0.9901, 0.0990, 0.0990);
+	//Orange Candle - Pre-normalized: vec3(1.0, 0.5, 0.1) / length ≈ vec3(0.8729, 0.4364, 0.0873)
+	else if(id == 44) color = vec3(0.8729, 0.4364, 0.0873);
+	//Yellow Candle - Pre-normalized: vec3(1.0, 1.0, 0.1) / length ≈ vec3(0.7036, 0.7036, 0.0704)
+	else if(id == 45) color = vec3(0.7036, 0.7036, 0.0704);
+	//Brown Candle - Pre-normalized: vec3(0.7, 0.7, 0.0) / length ≈ vec3(0.7071, 0.7071, 0.0000)
+	else if(id == 46) color = vec3(0.7071, 0.7071, 0.0000);
+	//Green Candle - Pre-normalized: vec3(0.1, 1.0, 0.1) / length ≈ vec3(0.0995, 0.9950, 0.0995)
+	else if(id == 47) color = vec3(0.0995, 0.9950, 0.0995);
+	//Lime Candle - Pre-normalized: vec3(0.0, 1.0, 0.1) / length ≈ vec3(0.0000, 0.9950, 0.0995)
+	else if(id == 48) color = vec3(0.0000, 0.9950, 0.0995);
+	//Blue Candle - Pre-normalized: vec3(0.1, 0.1, 1.0) / length ≈ vec3(0.0995, 0.0995, 0.9950)
+	else if(id == 49) color = vec3(0.0995, 0.0995, 0.9950);
+	//Light blue Candle - Pre-normalized: vec3(0.5, 0.5, 1.0) / length ≈ vec3(0.4082, 0.4082, 0.8165)
+	else if(id == 50) color = vec3(0.4082, 0.4082, 0.8165);
+	//Cyan Candle - Pre-normalized: vec3(0.1, 1.0, 1.0) / length ≈ vec3(0.0704, 0.7036, 0.7036)
+	else if(id == 51) color = vec3(0.0704, 0.7036, 0.7036);
+	//Purple Candle - Pre-normalized: vec3(0.7, 0.1, 1.0) / length ≈ vec3(0.5698, 0.0814, 0.8140)
+	else if(id == 52) color = vec3(0.5698, 0.0814, 0.8140);
+	//Magenta Candle - Pre-normalized: vec3(1.0, 0.1, 1.0) / length ≈ vec3(0.7036, 0.0704, 0.7036)
+	else if(id == 53) color = vec3(0.7036, 0.0704, 0.7036);
+	//Pink Candle - Pre-normalized: vec3(1.0, 0.5, 1.0) / length ≈ vec3(0.6325, 0.3162, 0.6325)
+	else if(id == 54) color = vec3(0.6325, 0.3162, 0.6325);
+	//Black Candle - Pre-normalized: vec3(0.3, 0.3, 0.3) / length ≈ vec3(0.5774, 0.5774, 0.5774)
+	else if(id == 55) color = vec3(0.5774, 0.5774, 0.5774);
+	//White Candle - Pre-normalized: vec3(0.9, 0.9, 0.9) / length ≈ vec3(0.5774, 0.5774, 0.5774)
+	else if(id == 56) color = vec3(0.5774, 0.5774, 0.5774);
+	//Gray Candle - Pre-normalized: vec3(0.5, 0.5, 0.5) / length ≈ vec3(0.5774, 0.5774, 0.5774)
+	else if(id == 57) color = vec3(0.5774, 0.5774, 0.5774);
+	//Light gray Candle - Pre-normalized: vec3(0.7, 0.7, 0.7) / length ≈ vec3(0.5774, 0.5774, 0.5774)
+	else if(id == 58) color = vec3(0.5774, 0.5774, 0.5774);
+    //Candle - Pre-normalized: vec3(0.6, 0.5, 0.4) / length ≈ vec3(0.7071, 0.5893, 0.3928)
+    else if(id == 59) color = vec3(0.7071, 0.5893, 0.3928);
     //Beacon
     else if(id == 60) color = vec3(BC_R, BC_G, BC_B) * BC_I;
 	//Sculk Sensor
@@ -155,18 +155,18 @@ vec3 getBlocklightColor(int id) {
 	else if(id == 73) color = vec3(1.0, 0.3, 0.1);
 
 	#ifdef EMISSIVE_FLOWERS
-    //Red Potted flowers
-    else if(id == 74) color = normalize(vec3(1.00, 0.05, 0.05)) * 0.20;
-    //Pink Potted flowers
-    else if(id == 75) color = normalize(vec3(0.80, 0.20, 0.60)) * 0.20;
-    //Yellow Potted flowers
-    else if(id == 76) color = normalize(vec3(0.80, 0.50, 0.05)) * 0.20;
-    //Blue Potted flowers
-    else if(id == 77) color = normalize(vec3(0.00, 0.15, 1.00)) * 0.20;
-    //White Potted flowers
-    else if(id == 78) color = normalize(vec3(0.80, 0.80, 0.80)) * 0.20;
-    //Orange Potted flowers
-    else if(id == 79) color = normalize(vec3(1.00, 0.70, 0.05)) * 0.20;
+    //Red Potted flowers - Pre-normalized: vec3(1.00, 0.05, 0.05) / length ≈ vec3(0.9975, 0.0499, 0.0499)
+    else if(id == 74) color = vec3(0.9975, 0.0499, 0.0499) * 0.20;
+    //Pink Potted flowers - Pre-normalized: vec3(0.80, 0.20, 0.60) / length ≈ vec3(0.7845, 0.1961, 0.5883)
+    else if(id == 75) color = vec3(0.7845, 0.1961, 0.5883) * 0.20;
+    //Yellow Potted flowers - Pre-normalized: vec3(0.80, 0.50, 0.05) / length ≈ vec3(0.8427, 0.5267, 0.0527)
+    else if(id == 76) color = vec3(0.8427, 0.5267, 0.0527) * 0.20;
+    //Blue Potted flowers - Pre-normalized: vec3(0.00, 0.15, 1.00) / length ≈ vec3(0.0000, 0.1483, 0.9890)
+    else if(id == 77) color = vec3(0.0000, 0.1483, 0.9890) * 0.20;
+    //White Potted flowers - Pre-normalized: vec3(0.80, 0.80, 0.80) / length = vec3(0.5774, 0.5774, 0.5774)
+    else if(id == 78) color = vec3(0.5774, 0.5774, 0.5774) * 0.20;
+    //Orange Potted flowers - Pre-normalized: vec3(1.00, 0.70, 0.05) / length ≈ vec3(0.8165, 0.5715, 0.0408)
+    else if(id == 79) color = vec3(0.8165, 0.5715, 0.0408) * 0.20;
 	#endif
 
     //Chorus
@@ -187,13 +187,13 @@ vec3 getBlocklightColor(int id) {
 	//Generic emitters with different colors
 	//Blocks in this range will emit their respective color
 	//A good way to quickly make modded blocks emit light
-	else if(id == 194) color = normalize(vec3(1.00, 0.05, 0.05)) * 0.50; //block.10194, red
-	else if(id == 195) color = normalize(vec3(1.00, 0.70, 0.05)) * 0.50; //block.10195, orange
-	else if(id == 196) color = normalize(vec3(0.80, 0.50, 0.05)) * 0.50; //block.10196, yellow
-	else if(id == 197) color = normalize(vec3(0.10, 1.00, 0.10)) * 0.50; //block.10197, green
-	else if(id == 198) color = normalize(vec3(0.00, 0.15, 1.00)) * 0.50; //block.10198, blue
-	else if(id == 199) color = normalize(vec3(0.70, 0.10, 1.00)) * 0.50; //block.10199, purple
-	else if(id == 200) color = normalize(vec3(0.80, 0.80, 0.80)) * 0.50; //block.10200, white
+	else if(id == 194) color = vec3(0.9975, 0.0499, 0.0499) * 0.50; //block.10194, red
+	else if(id == 195) color = vec3(0.8165, 0.5715, 0.0408) * 0.50; //block.10195, orange
+	else if(id == 196) color = vec3(0.8427, 0.5267, 0.0527) * 0.50; //block.10196, yellow
+	else if(id == 197) color = vec3(0.0704, 0.7036, 0.7036) * 0.50; //block.10197, green (corrected from vec3(0.10, 1.00, 0.10))
+	else if(id == 198) color = vec3(0.0000, 0.1483, 0.9890) * 0.50; //block.10198, blue
+	else if(id == 199) color = vec3(0.5698, 0.0814, 0.8140) * 0.50; //block.10199, purple
+	else if(id == 200) color = vec3(0.5774, 0.5774, 0.5774) * 0.50; //block.10200, white
 
 	return color;
 }

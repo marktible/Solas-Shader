@@ -737,43 +737,44 @@ float maxOf(vec3 v) { return max(max(v.x, v.y), v.z); }
 // Optimized: Use native GLSL mix() instead of custom mix() for better performance
 // Native mix() is hardware-optimized and avoids redundant clamping overhead
 
+// Optimized power functions using repeated squaring for better performance
 float pow2(float x) {return x*x;}
-float pow3(float x) {return x*x*x;}
-float pow4(float x) {return x*x*x*x;}
-float pow5(float x) {return x*x*x*x*x;}
-float pow6(float x) {return x*x*x*x*x*x;}
-float pow7(float x) {return x*x*x*x*x*x*x;}
-float pow8(float x) {return x*x*x*x*x*x*x*x;}
-float pow9(float x) {return x*x*x*x*x*x*x*x*x;}
-float pow10(float x) {return x*x*x*x*x*x*x*x*x*x;}
-float pow11(float x) {return x*x*x*x*x*x*x*x*x*x*x;}
-float pow12(float x) {return x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow13(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow14(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow15(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow16(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow17(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow18(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow19(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow20(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow24(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
-float pow32(float x) {return x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x*x;}
+float pow3(float x) {float x2 = x*x; return x2*x;}
+float pow4(float x) {float x2 = x*x; return x2*x2;}
+float pow5(float x) {float x2 = x*x, x4 = x2*x2; return x4*x;}
+float pow6(float x) {float x2 = x*x, x4 = x2*x2; return x4*x2;}
+float pow7(float x) {float x2 = x*x, x4 = x2*x2; return x4*x2*x;}
+float pow8(float x) {float x2 = x*x, x4 = x2*x2; return x4*x4;}
+float pow9(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x;}
+float pow10(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x2;}
+float pow11(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x2*x;}
+float pow12(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x4;}
+float pow13(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x4*x;}
+float pow14(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x4*x2;}
+float pow15(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x4*x2*x;}
+float pow16(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4; return x8*x8;}
+float pow17(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x;}
+float pow18(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x2;}
+float pow19(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x2*x;}
+float pow20(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x4;}
+float pow24(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x8;}
+float pow32(float x) {float x2 = x*x, x4 = x2*x2, x8 = x4*x4, x16 = x8*x8; return x16*x16;}
 
 vec2 pow2(vec2 x) {return x*x;}
-vec2 pow3(vec2 x) {return x*x*x;}
-vec2 pow4(vec2 x) {return x*x*x*x;}
-vec2 pow5(vec2 x) {return x*x*x*x*x;}
-vec2 pow6(vec2 x) {return x*x*x*x*x*x;}
-vec2 pow7(vec2 x) {return x*x*x*x*x*x*x;}
-vec2 pow8(vec2 x) {return x*x*x*x*x*x*x*x;}
+vec2 pow3(vec2 x) {vec2 x2 = x*x; return x2*x;}
+vec2 pow4(vec2 x) {vec2 x2 = x*x; return x2*x2;}
+vec2 pow5(vec2 x) {vec2 x2 = x*x, x4 = x2*x2; return x4*x;}
+vec2 pow6(vec2 x) {vec2 x2 = x*x, x4 = x2*x2; return x4*x2;}
+vec2 pow7(vec2 x) {vec2 x2 = x*x, x4 = x2*x2; return x4*x2*x;}
+vec2 pow8(vec2 x) {vec2 x2 = x*x, x4 = x2*x2; return x4*x4;}
 
 vec3 pow2(vec3 x) {return x*x;}
-vec3 pow3(vec3 x) {return x*x*x;}
-vec3 pow4(vec3 x) {return x*x*x*x;}
-vec3 pow5(vec3 x) {return x*x*x*x*x;}
-vec3 pow6(vec3 x) {return x*x*x*x*x*x;}
-vec3 pow7(vec3 x) {return x*x*x*x*x*x*x;}
-vec3 pow8(vec3 x) {return x*x*x*x*x*x*x*x;}
+vec3 pow3(vec3 x) {vec3 x2 = x*x; return x2*x;}
+vec3 pow4(vec3 x) {vec3 x2 = x*x; return x2*x2;}
+vec3 pow5(vec3 x) {vec3 x2 = x*x, x4 = x2*x2; return x4*x;}
+vec3 pow6(vec3 x) {vec3 x2 = x*x, x4 = x2*x2; return x4*x2;}
+vec3 pow7(vec3 x) {vec3 x2 = x*x, x4 = x2*x2; return x4*x2*x;}
+vec3 pow8(vec3 x) {vec3 x2 = x*x, x4 = x2*x2; return x4*x4;}
 
 //**//**//**//**//**// I N T E R N A L S //**//**//**//**//**//
 #ifndef OVERWORLD

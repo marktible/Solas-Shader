@@ -734,20 +734,8 @@ const vec3 weatherCol = vec3(WEATHER_RR, WEATHER_RG, WEATHER_RB) / 255.0 * WEATH
 float minOf(vec3 v) { return min(min(v.x, v.y), v.z); }
 float maxOf(vec3 v) { return max(max(v.x, v.y), v.z); }
 
-float fmix(float a, float b, float t) {
-    t = min(max(t, 0.0), 1.0);
-    return a + t * (b - a);
-}
-
-vec3 fmix(vec3 a, vec3 b, vec3 t) {
-    t = min(max(t, 0.0), 1.0);
-    return a + t * (b - a);
-}
-
-vec3 fmix(vec3 a, vec3 b, float t) {
-    t = min(max(t, 0.0), 1.0);
-    return a + t * (b - a);
-}
+// Optimized: Use native GLSL mix() instead of custom mix() for better performance
+// Native mix() is hardware-optimized and avoids redundant clamping overhead
 
 float pow2(float x) {return x*x;}
 float pow3(float x) {return x*x*x;}

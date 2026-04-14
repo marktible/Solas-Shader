@@ -122,7 +122,7 @@ void drawAurora(inout vec3 color, in vec3 worldPos, in float caveFactor, in floa
 
                 vec3 lowA = vec3(0.45, 1.55 - redPhase * 0.5, 0.0);
                 vec3 upA = vec3(0.95 + redPhase * 2.0, 0.10, 1.05);
-                vec3 auroraA = fmix(lowA, upA, mix(colorMixer, 1.0 - colorMixer, altitudeFactor50k)) * mix(attenuation, 1.0 - attenuation, altitudeFactor);
+                vec3 auroraA = mix(lowA, upA, mix(colorMixer, 1.0 - colorMixer, altitudeFactor50k)) * mix(attenuation, 1.0 - attenuation, altitudeFactor);
 
 				aurora += auroraA * auroraSample * sqrt(auroraDistanceFactor);
 			}

@@ -41,7 +41,7 @@ float CloudApplyDensity(float noise, float density) {
 float CloudCombineDefault(float noiseBase, float noiseDetail, float amount, float density) {
 	float noise = noiseBase * 19.0;
 
-	noise = fmix(noise, 21.0, 0.25 * wetness);
+	noise = mix(noise, 21.0, 0.25 * wetness);
 	noise = max(noise - amount, 0.0);
 
 	noise = CloudApplyDensity(noise, density);
@@ -61,5 +61,5 @@ void getCloudShadow(vec2 coord, vec2 wind, float amount, float density, inout fl
     #else
     noise = clamp(exp(-3.5 * noise), 0.0, 1.0);
     #endif
-    noise = fmix(1.0, noise, shadowFade);
+    noise = mix(1.0, noise, shadowFade);
 }

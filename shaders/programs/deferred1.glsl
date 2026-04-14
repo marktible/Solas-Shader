@@ -127,7 +127,7 @@ vec3 eastVec = normalize(gbufferModelView[0].xyz);
 
 #ifdef OVERWORLD
 float eBS = eyeBrightnessSmooth.y / 240.0;
-float caveFactor = fmix(clamp((cameraPosition.y - 56.0) / 16.0, float(sign(isEyeInWater)), 1.0), 1.0, sqrt(eBS));
+float caveFactor = mix(clamp((cameraPosition.y - 56.0) / 16.0, float(sign(isEyeInWater)), 1.0), 1.0, sqrt(eBS));
 float sunVisibility = clamp(dot(sunVec, upVec) + 0.0625, 0.0, 0.125) / 0.125;
 float moonVisibility = clamp(dot(-sunVec, upVec) + 0.0625, 0.0, 0.125) / 0.125;
 vec3 lightVec = sunVec * ((timeAngle < 0.5325 || timeAngle > 0.9675) ? 1.0 : -1.0);
@@ -299,7 +299,7 @@ void main() {
 
     //Planar Clouds
     #ifdef PLANAR_CLOUDS
-    skyColor = fmix(skyColor, pc.rgb, pc.a * pc.a);
+    skyColor = mix(skyColor, pc.rgb, pc.a * pc.a);
     #endif
 	#endif
 
@@ -416,7 +416,7 @@ void main() {
 	cloudDepth /= (2.0 * farPlane);
 	#endif
 
-	color = fmix(color, vc.rgb, vc.a);
+	color = mix(color, vc.rgb, vc.a);
 	#endif
 
     /* DRAWBUFFERS:045 */

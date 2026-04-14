@@ -16,7 +16,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
     //Vanilla Directional Lighting
     float vanillaDiffuse = (0.25 * NoU + 0.75) + (0.667 - abs(NoE)) * (1.0 - abs(NoU)) * 0.15;
             vanillaDiffuse *= vanillaDiffuse;
-            vanillaDiffuse = fmix(1.0, vanillaDiffuse, lightmap.y);
+            vanillaDiffuse = mix(1.0, vanillaDiffuse, lightmap.y);
 
     //Block Lighting
     float blockLightMap = pow6(lightmap.x * lightmap.x) * 2.0 + max(lightmap.x - 0.05, 0.0);
@@ -53,7 +53,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
 
         float mixFactor = 1.0 - floodfillFade * floodfillFade;
 
-        blockLighting = fmix(blockLighting, voxelLighting * FLOODFILL_BRIGHTNESS, mixFactor * 0.95);
+        blockLighting = mix(blockLighting, voxelLighting * FLOODFILL_BRIGHTNESS, mixFactor * 0.95);
     }
     #endif
 
@@ -96,13 +96,13 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
         float scatter = pow6(clamp(VoL * 0.5 + 0.5, 0.0, 1.0));
                 scatter *= subsurface * subsurface;
 
-        sss = fmix(wrapTerm, 1.0, scatter);
+        sss = mix(wrapTerm, 1.0, scatter);
 
         #ifdef OVERWORLD
         sss *= shadowFade * (1.0 - wetness * 0.4);
         #endif
 
-        NoL = fmix(NoL, sss * (0.25 + VoUPositive * 0.75), subsurface * shadowVisibility * 0.65);
+        NoL = mix(NoL, sss * (0.25 + VoUPositive * 0.75), subsurface * shadowVisibility * 0.65);
     }
     #endif
 
@@ -117,7 +117,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
 
         #ifdef GBUFFERS_TEXTURED
             vec3 centerWorldPos = floor(worldPos + cameraPosition) - cameraPosition + 0.5;
-            worldPosM = fmix(centerWorldPos, worldPosM + vec3(0.0, 0.02, 0.0), lightmapS);
+            worldPosM = mix(centerWorldPos, worldPosM + vec3(0.0, 0.02, 0.0), lightmapS);
         #else
             //Shadow bias without peter-panning
             float distanceBias = pow(dot(worldPos, worldPos), 0.75);
@@ -127,7 +127,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
             //Fix light leaking in caves
             if (lightmapS < 0.999) {
                 #ifdef GBUFFERS_HAND
-                    worldPosM = fmix(vec3(0.0), worldPosM, 0.2 + 0.8 * lightmapS);
+                    worldPosM = mix(vec3(0.0), worldPosM, 0.2 + 0.8 * lightmapS);
                 #else
                     vec3 edgeFactor = 0.2 * (0.5 - fract(worldPosM + cameraPosition + worldNormal * 0.01));
 
@@ -165,7 +165,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
     vec3 realShadow = shadow * NoL;
     vec3 fakeShadow = getFakeShadow(lightmap.y) * NoL;
 
-    shadow = fmix(fakeShadow, realShadow, vec3(shadowVisibility));
+    shadow = mix(fakeShadow, realShadow, vec3(shadowVisibility));
     #endif
 
     float time = (worldTime + int(5 + mod(worldDay, 100)) * 24000) * 0.05;
@@ -208,7 +208,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
         #ifdef END
                 smoothness -= 0.10;
         #endif
-                smoothnessF = fmix(smoothnessF, 1.0, smoothness);
+                smoothnessF = mix(smoothnessF, 1.0, smoothness);
 
         // LabPBR: use f0 and metalness that were passed in
         // (falls back to synthetic f0 = 0.5/metalness when using generated PBR)
@@ -237,7 +237,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
 
     float rainFactor = 1.0 - wetness * 0.5;
 
-    vec3 sceneLighting = fmix(ambientCol, lightCol, shadow * rainFactor * shadowFade) * (0.25 + lightmap.y * 0.75);
+    vec3 sceneLighting = mix(ambientCol, lightCol, shadow * rainFactor * shadowFade) * (0.25 + lightmap.y * 0.75);
             sceneLighting *= 1.0 + sss * shadow * 2.0;
 
     #ifdef AURORA_LIGHTING_INFLUENCE
@@ -264,11 +264,11 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
     }
     #endif
     #elif defined END
-    vec3 sceneLighting = fmix(endAmbientCol, endLightCol, shadow) * 0.25;
+    vec3 sceneLighting = mix(endAmbientCol, endLightCol, shadow) * 0.25;
     #ifdef END_FLASHES
     vec3 worldEndFlashPosition = mat3(gbufferModelViewInverse) * endFlashPosition;
     float endFlashDirection = clamp(dot(normalize(ToWorld(endFlashPosition * 100000000.0)), worldNormal), 0.0, 1.0);
-    sceneLighting = fmix(sceneLighting, endFlashCol, 0.125 * endFlashDirection * endFlashDirection * endFlashIntensity);
+    sceneLighting = mix(sceneLighting, endFlashCol, 0.125 * endFlashDirection * endFlashDirection * endFlashIntensity);
     #endif
     #elif defined NETHER
     vec3 sceneLighting = pow(netherColSqrt, vec3(0.75)) * 0.025;
@@ -298,7 +298,7 @@ void gbuffersLighting(in vec4 color, inout vec4 albedo, in vec3 screenPos, in ve
             aoMixer *= 1.0 - float(length(shadow) > 0.0) * 0.5;
     #endif
 
-    albedo.rgb = fmix(albedo.rgb, albedo.rgb * pow(vanillaAo, 1.0 + lightmap.y), aoMixer);
+    albedo.rgb = mix(albedo.rgb, albedo.rgb * pow(vanillaAo, 1.0 + lightmap.y), aoMixer);
     #endif
 
     albedo.rgb = pow(albedo.rgb, vec3(2.2));

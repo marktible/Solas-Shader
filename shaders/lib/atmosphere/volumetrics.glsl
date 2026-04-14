@@ -6,7 +6,7 @@ float getNetherFogSample(vec3 fogPos) {
     float n3da = texture2D(noisetex, fogPos.xz * 0.005 + floor(fogPos.y * 0.1) * 0.1).r;
     float n3db = texture2D(noisetex, fogPos.xz * 0.005 + floor(fogPos.y * 0.1 + 1.0) * 0.1).r;
 
-    float cloudyNoise = fmix(n3da, n3db, fract(fogPos.y * 0.1));
+    float cloudyNoise = mix(n3da, n3db, fract(fogPos.y * 0.1));
           cloudyNoise = max(cloudyNoise - 0.5, 0.0);
     return cloudyNoise;
 }
@@ -33,7 +33,7 @@ void calculateVLParameters(inout float intensity, inout float distanceFactor, in
     float VoLClamped = clamp(VoL, 0.0, 1.0);
     float VoUClamped = clamp(VoU, 0.0, 1.0);
 
-    float timeIntensityFactor = fmix(VL_NIGHT * 2.0, fmix(VL_MORNING_EVENING, VL_DAY, timeBrightness), sunVisibility);
+    float timeIntensityFactor = mix(VL_NIGHT * 2.0, mix(VL_MORNING_EVENING, VL_DAY, timeBrightness), sunVisibility);
 
     float averageDepth = 0.0;
 	for (float i = 0.1; i < 1.0; i += 0.1) {
@@ -49,7 +49,7 @@ void calculateVLParameters(inout float intensity, inout float distanceFactor, in
     intensity *= timeIntensityFactor * (1.0 + closedSpaceFactor);
 
     #ifdef VC_SHADOWS
-    intensity = fmix(intensity, 1.0, clamp((cameraPosition.y - VC_HEIGHT) * 0.01, 0.0, 1.0));
+    intensity = mix(intensity, 1.0, clamp((cameraPosition.y - VC_HEIGHT) * 0.01, 0.0, 1.0));
     intensity = intensity * float(isEyeInWater == 0) + float(isEyeInWater == 1) * (1.0 + VoLClamped * VoLClamped * 2.0) * (0.25 + sunVisibility * 1.75);
     #else
     intensity *= max(pow4(1.0 - VoUClamped), float(isEyeInWater == 1));
@@ -121,8 +121,8 @@ void computeVolumetricLight(inout vec3 vl, in vec3 translucent, in float dither)
 
     calculateVLParameters(vlIntensity, vlDistanceFactor, vlSamplePersistence, VoU, VoL);
 
-    vec3 nSkyColor = normalize(skyColor + 0.000001) * fmix(vec3(1.0), biomeColor, sunVisibility * isSpecificBiome);
-    vec3 vlCol = fmix(lightCol, nSkyColor, timeBrightness * 0.75) * 0.1;
+    vec3 nSkyColor = normalize(skyColor + 0.000001) * mix(vec3(1.0), biomeColor, sunVisibility * isSpecificBiome);
+    vec3 vlCol = mix(lightCol, nSkyColor, timeBrightness * 0.75) * 0.1;
     #endif
 
     #ifdef NETHER_SMOKE
@@ -268,7 +268,7 @@ void computeVolumetricLight(inout vec3 vl, in vec3 translucent, in float dither)
                     float n3da = texture2D(noisetex, noisePos.xz * 0.0025 + floor(noisePos.y * 0.25) * 0.25).r;
                     float n3db = texture2D(noisetex, noisePos.xz * 0.0025 + floor(noisePos.y * 0.25 + 1.0) * 0.25).r;
 
-                    float cloudyNoise = fmix(n3da, n3db, fract(noisePos.y * 0.25));
+                    float cloudyNoise = mix(n3da, n3db, fract(noisePos.y * 0.25));
                           cloudyNoise = max(cloudyNoise * cloudyNoise * cloudyNoise, 0.0);
                     lpvFogSample *= cloudyNoise;
                     #endif

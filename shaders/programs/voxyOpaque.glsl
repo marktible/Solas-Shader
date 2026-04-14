@@ -20,7 +20,7 @@ vec3 eastVec = normalize(vxModelView[0].xyz);
 
 #ifdef OVERWORLD
 float eBS = eyeBrightnessSmooth.y / 240.0;
-float caveFactor = fmix(clamp((cameraPosition.y - 56.0) / 16.0, float(sign(isEyeInWater)), 1.0), 1.0, sqrt(eBS));
+float caveFactor = mix(clamp((cameraPosition.y - 56.0) / 16.0, float(sign(isEyeInWater)), 1.0), 1.0, sqrt(eBS));
 float sunVisibility = clamp((dot( sunVec, upVec) + 0.15) * 3.0, 0.0, 1.0);
 float moonVisibility = clamp((dot(-sunVec, upVec) + 0.15) * 3.0, 0.0, 1.0);
 vec3 lightVec = sunVec * ((timeAngle < 0.5325 || timeAngle > 0.9675) ? 1.0 : -1.0);
@@ -137,6 +137,6 @@ void voxy_emitFragment(VoxyFragmentParameters parameters) {
             shadowMask *= 1.0 + sss * 2.0;
 
     out0 = albedo;
-    out1 = vec4(encodeNormal(newNormal), shadowMask, clamp(fmix(smoothness, 1.0, metalness * metalness), 0.0, 0.95));
+    out1 = vec4(encodeNormal(newNormal), shadowMask, clamp(mix(smoothness, 1.0, metalness * metalness), 0.0, 0.95));
 }
 #undef VOXY_OPAQUE
